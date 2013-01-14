@@ -1,14 +1,14 @@
-# Copyright 2011 Gentoo Foundation
+# Copyright 2011-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: svn://core/kids/portage/trunk/dev-python/django-gmapi/django-gmapi-1.0.1.ebuild 2230 2011-09-15 06:38:48Z glitch $
+# $Header$
 
 EAPI=3
 
 inherit distutils
 
-DESCRIPTION="Django Google Maps API v3 and Static Maps API helper app"
+DESCRIPTION="A Google Maps API implementation for Django"
 HOMEPAGE="http://code.google.com/p/${PN}/"
-SRC_URI="http://${PN}.googlecode.com/files/${P}.zip"
+SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.zip"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~x86 ~x86-fbsd"
