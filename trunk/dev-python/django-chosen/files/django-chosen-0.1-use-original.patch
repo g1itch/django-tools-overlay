@@ -1,0 +1,74 @@
+--- chosen/widgets.py~	2012-04-20 18:37:35.000000000 +0300
++++ chosen/widgets.py	2013-01-23 13:10:44.474214722 +0200
+@@ -8,9 +8,10 @@
+ class ChosenWidgetMixin(object):
+ 
+     class Media:
+-        js = ("%s%s?v=1" % (settings.STATIC_URL, "js/chosen.jquery.min.js"),
+-            "%s%s?v=3" % (settings.STATIC_URL, "js/chosen.jquery_ready.js"))
+-        css = {"all": ("%s%s?v=1" % (settings.STATIC_URL, "css/chosen.css"), )}
++        js = ("chosen/before-chosen.js",
++              "chosen/chosen.jquery.min.js",
++              "chosen/after-chosen.js")
++        css = {"all": ("chosen/chosen.css", )}
+ 
+     def __init__(self, attrs={}, *args, **kwargs):
+ 
+diff -urN chosen/static.orig/chosen/after-chosen.js chosen/static/chosen/after-chosen.js
+--- chosen/static.orig/chosen/after-chosen.js	1970-01-01 03:00:00.000000000 +0300
++++ chosen/static/chosen/after-chosen.js	2013-01-23 13:17:03.775323321 +0200
+@@ -0,0 +1,37 @@
++(function ($) {
++    $(function () {
++        $(".chzn-select").each(function(i, select) {
++            var options, $select = $(select);
++
++            // Set overflow:visible on parent .form-row for django admin
++            $select.parents('.form-row').css('overflow', 'visible');
++
++            if (typeof grappelli === 'object') {
++                // Set overflow:visible on grappelli fieldset.module .row
++                $select.parents('.row').filter(function(i) {
++                    return $(this).parent('fieldset.module').length;
++                }).css('overflow', 'visible');
++                // Set overflow:visible on grappelli tabular module
++                $select.parents('td').filter(function(i) {
++                    return $(this).parent('.module.table').length;
++                }).css('overflow', 'visible');
++            }
++
++            // Initialize Chosen, read options from data-chosen attribute
++            try {
++                options = $.parseJSON($select.attr('data-chosen'));
++            } catch (e) {
++                options = {};
++            }
++            // Set i18n options
++            if (typeof gettext !== 'undefined') {
++                options = $.extend({
++                    no_results_text: gettext('No results match')
++                }, options);
++            }
++            $select.chosen(options);
++        });
++    });
++})(window.jQuery);
++
++window.jQuery = window.prevjQuery;
+diff -urN chosen/static.orig/chosen/before-chosen.js chosen/static/chosen/before-chosen.js
+--- chosen/static.orig/chosen/before-chosen.js	1970-01-01 03:00:00.000000000 +0300
++++ chosen/static/chosen/before-chosen.js	2013-01-23 13:17:03.775323321 +0200
+@@ -0,0 +1,2 @@
++window.prevjQuery = window.jQuery;
++window.jQuery = (typeof window.django != 'undefined') ? django.jQuery : window.prevjQuery;
+--- MANIFEST.in~	2012-04-20 18:37:35.000000000 +0300
++++ MANIFEST.in	2013-01-23 14:51:06.938254838 +0200
+@@ -1,5 +1 @@
+-include chosen/static/css/chosen.css
+-include chosen/static/img/chosen-sprite.png
+-include chosen/static/js/*.js
+-include chosen/static/js/chosen.LICENSE.md
+-reverse-include chosen/static *
+\ В конце файла нет новой строки
++recursive-include chosen/static *
+\ В конце файла нет новой строки
