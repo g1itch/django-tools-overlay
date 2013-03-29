@@ -15,5 +15,9 @@ SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
 LICENSE="MIT"
 KEYWORDS="~x86 ~amd64 ~x86-fbsd"
 SLOT="0"
+IUSE="" #ntlm ssl
 
 DEPEND="dev-python/setuptools"
+RDEPEND="dev-python/python-dateutil"
+# ntlm? ( pyDes )
+# dev-python[ssl=]
