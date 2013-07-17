@@ -19,6 +19,7 @@ IUSE="" #ntlm ssl
 
 DEPEND="dev-python/setuptools"
 RDEPEND="dev-python/python-dateutil
-	dev-python/six"
+	dev-python/six
+	dev-python/bitarray"
 # ntlm? ( pyDes )
 # dev-python[ssl=]
