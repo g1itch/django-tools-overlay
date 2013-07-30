@@ -16,4 +16,5 @@ KEYWORDS="~x86 ~amd64 ~x86-fbsd"
 SLOT="0"
 
 RDEPEND=">=dev-python/django-1.3"
-DEPEND="dev-python/setuptools"
+DEPEND="${RDEPEND}
+	dev-python/setuptools"
