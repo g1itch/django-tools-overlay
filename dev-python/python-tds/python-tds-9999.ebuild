@@ -17,5 +17,4 @@ KEYWORDS=""
 SLOT="0"
 
 DEPEND="dev-python/setuptools"
-RDEPEND="dev-python/python-dateutil
-	dev-python/six"
+RDEPEND=">=dev-python/six-1.4.1"
