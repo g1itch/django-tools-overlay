@@ -3,7 +3,7 @@
 # $Header$
 
 EAPI=5
-PYTHON_COMPAT=( python{2_7,3_1,3_2} )
+PYTHON_COMPAT=( python{2_7,3_1,3_2,3_3,3_4} )
 
 inherit distutils-r1
 
@@ -19,6 +19,7 @@ IUSE="" #ntlm ssl
 
 DEPEND="dev-python/setuptools"
 RDEPEND=">=dev-python/six-1.4.1
-	dev-python/bitarray"
+	dev-python/bitarray
+	dev-python/python-dateutil"
 # ntlm? ( pyDes )
 # dev-python[ssl=]
