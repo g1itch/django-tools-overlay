@@ -1,0 +1,84 @@
+--- /var/tmp/portage/dev-python/django-storages-1.1.8/work/django-storages-1.1.8/storages/backends/ftp.py	2013-03-20 22:58:32.000000000 +0200
++++ test/django-storages/storages/backends/ftp.py	2014-06-04 13:04:30.711922106 +0300
+@@ -6,11 +6,11 @@
+ # Usage:
+ #
+ # Add below to settings.py:
+-# FTP_STORAGE_LOCATION = '[a]ftp://<user>:<pass>@<host>:<port>/[path]'
++# FTP_STORAGE_LOCATION = '[a]ftp://<user>:<pass>@<host>:[port]/[path]'
+ #
+ # In models.py you can write:
+-# from FTPStorage import FTPStorage
+-# fs = FTPStorage()
++# from storages.backends import ftp
++# fs = ftp.FTPStorage()
+ # class FTPTest(models.Model):
+ #     file = models.FileField(upload_to='a/b/c/', storage=fs)
+ 
+@@ -36,16 +36,16 @@
+ class FTPStorage(Storage):
+     """FTP Storage class for Django pluggable storage system."""
+ 
+-    def __init__(self, location=settings.FTP_STORAGE_LOCATION,
++    def __init__(self, location=None,
+                  base_url=settings.MEDIA_URL):
+-        self._config = self._decode_location(location)
++        self._config = self._decode_location(
++            location or settings.FTP_STORAGE_LOCATION)
+         self._base_url = base_url
+         self._connection = None
+ 
+     def _decode_location(self, location):
+         """Return splitted configuration data from location."""
+         splitted_url = urlparse.urlparse(location)
+-        config = {}
+ 
+         if splitted_url.scheme not in ('ftp', 'aftp'):
+             raise ImproperlyConfigured(
+@@ -54,15 +54,18 @@
+         if splitted_url.hostname == '':
+             raise ImproperlyConfigured('You must at least provide hostname!')
+ 
+-        if splitted_url.scheme == 'aftp':
+-            config['active'] = True
+-        else:
+-            config['active'] = False
+-        config['path'] = splitted_url.path
+-        config['host'] = splitted_url.hostname
+-        config['user'] = splitted_url.username
+-        config['passwd'] = splitted_url.password
+-        config['port'] = int(splitted_url.port)
++        config = {
++            'active': splitted_url.scheme == 'aftp',
++            'path': splitted_url.path,
++            'host': splitted_url.hostname,
++            'user': splitted_url.username,
++            'passwd': splitted_url.password
++        }
++
++        try:
++            config['port'] = int(splitted_url.port)
++        except TypeError:
++            config['port'] = None
+ 
+         return config
+ 
+@@ -237,14 +240,15 @@
+             self._size = self._storage.size(self._name)
+         return self._size
+ 
+-    def read(self, num_bytes=None):
++    def read(self, *args):
+         if not self._is_read:
+             self._storage._start_connection()
+             self.file = self._storage._read(self._name)
+-            self._storage._end_connection()
++            self._storage.disconnect()
+             self._is_read = True
+ 
+-        return self.file.read(num_bytes)
++        self.file.seek(0)
++        return self.file.read(*args)
+ 
+     def write(self, content):
+         if 'w' not in self._mode:
