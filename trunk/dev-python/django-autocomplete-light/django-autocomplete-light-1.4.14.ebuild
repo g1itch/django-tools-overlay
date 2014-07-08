@@ -19,4 +19,4 @@ RDEPEND=">=dev-python/django-1.3"
 DEPEND="${RDEPEND}
 	dev-python/setuptools"
 
-PATCHES=( ${FILESDIR}/"1.4.13-django-1.7-apps.patch" )
+PATCHES=( "${FILESDIR}"/1.4.13-django-1.7-apps.patch )
