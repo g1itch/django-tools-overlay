@@ -15,5 +15,5 @@ LICENSE="BSD"
 KEYWORDS="~x86 ~amd64 ~x86-fbsd"
 SLOT="0"
 
-DEPEND="dev-python/setuptools"
-RDEPEND="<=dev-python/django-1.5"
+DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]"
+RDEPEND="<=dev-python/django-1.5[${PYTHON_USEDEP}]"
