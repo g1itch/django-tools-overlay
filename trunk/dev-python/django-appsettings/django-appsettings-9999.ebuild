@@ -5,14 +5,14 @@
 EAPI=5
 PYTHON_COMPAT=( python2_7 )
 
-inherit distutils-r1
+inherit distutils-r1 git-2
 
 DESCRIPTION="A unified settings system for pluggable django apps"
-HOMEPAGE="http://github.com/jaredly/${PN}"
-SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
+HOMEPAGE="https://github.com/jaredly/${PN}"
+EGIT_REPO_URI="${HOMEPAGE}.git"
 
 LICENSE="BSD"
-KEYWORDS="~x86 ~amd64 ~x86-fbsd"
+KEYWORDS=""
 SLOT="0"
 
 RDEPEND="dev-python/django"
