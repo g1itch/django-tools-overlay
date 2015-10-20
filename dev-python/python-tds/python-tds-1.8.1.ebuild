@@ -1,9 +1,9 @@
-# Copyright 2013 Gentoo Foundation
+# Copyright 2013-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header$
 
 EAPI=5
-PYTHON_COMPAT=( python{2_7,3_1,3_2} )
+PYTHON_COMPAT=( python{2_7,3_2,3_3,3_4,3_5} )
 
 inherit distutils-r1
 
@@ -18,7 +18,8 @@ SLOT="0"
 IUSE="" #ntlm ssl
 
 DEPEND="dev-python/setuptools"
-RDEPEND="dev-python/python-dateutil
-	dev-python/six"
+RDEPEND=">=dev-python/six-1.4.1
+	dev-python/bitarray
+	dev-python/python-dateutil"
 # ntlm? ( pyDes )
 # dev-python[ssl=]
