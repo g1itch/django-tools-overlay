@@ -1,6 +1,5 @@
-# Copyright 2013 Gentoo Foundation
+# Copyright 2013-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header$
 
 EAPI=5
 PYTHON_COMPAT=( python2_7 )
@@ -15,6 +14,6 @@ LICENSE="MIT"
 KEYWORDS="~x86 ~amd64 ~x86-fbsd"
 SLOT="0"
 
-DEPEND="dev-python/setuptools"
-RDEPEND="dev-python/django
-	dev-python/python-tds"
+DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]"
+RDEPEND="dev-python/django[${PYTHON_USEDEP}]
+	dev-python/python-tds[${PYTHON_USEDEP}]"
